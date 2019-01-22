@@ -23,11 +23,11 @@ class PageError(WikipediaException):
 
     def __unicode__(self):
         if hasattr(self, 'title'):
-            return u"\"{0}\" does not match any pages." \
-                   u" Try another query!".format(self.title)
+            return "\"{0}\" does not match any pages." \
+                   " Try another query!".format(self.title)
         else:
-            return u"Page id \"{0}\" does not " \
-                   u"match any pages. Try another id!".format(self.pageid)
+            return "Page id \"{0}\" does not " \
+                   "match any pages. Try another id!".format(self.pageid)
 
 
 class RedirectError(WikipediaException):
@@ -38,8 +38,8 @@ class RedirectError(WikipediaException):
         self.title = title
 
     def __unicode__(self):
-        return u"\"{0}\" resulted in a redirect. Set the redirect property" \
-               u" to True to allow automatic redirects.".format(self.title)
+        return "\"{0}\" resulted in a redirect. Set the redirect property" \
+               " to True to allow automatic redirects.".format(self.title)
 
 
 class HTTPTimeoutError(WikipediaException):
@@ -49,7 +49,7 @@ class HTTPTimeoutError(WikipediaException):
         self.query = query
 
     def __unicode__(self):
-        return u"Searching for \"{0}\" resulted in a timeout." \
-               u" Try again in a few" \
-               u" seconds, and make sure you have" \
-               u" rate limiting set to True.".format(self.query)
+        return "Searching for \"{0}\" resulted in a timeout." \
+               " Try again in a few" \
+               " seconds, and make sure you have" \
+               " rate limiting set to True.".format(self.query)
