@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>GrandPy Bot, le papy-robot</title>
+</head>
+<body>
+
+<div class="container">
+    {% block body %}
+    {% endblock %}
+
+    <hr/>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    Réseaux sociaux
+                </div>
+                <div class="card-body">
+                    <figure class="figure">
+                        <img src="{{ url_for('static', filename='image/github.png') }}"
+                             class="figure-img img-fluid rounded"
+                             alt="lien github" width="20" height="20">
+                        <figcaption class="figure-caption">
+                            <a href="https://github.com/ivan-fr/oc_projet_7"
+                               target="_blank">Lien github</a>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+
+{% if url_google_map_api %}
+    <script src="{{ url_google_map_api }}" async defer></script>
+{% endif %}
+</body>
+</html>
