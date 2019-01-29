@@ -44,7 +44,6 @@ def post_ask():
                     wiki_search_list = wikipedia.geosearch(
                         latitude=google_maps_parsed['location']['lat'],
                         longitude=google_maps_parsed['location']['lng'],
-                        radius=10000
                     )
 
                 if wiki_search_list:
