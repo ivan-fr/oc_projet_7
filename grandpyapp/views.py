@@ -13,6 +13,7 @@ app.config.from_object('config')
 
 @app.route('/')
 def index():
+    """Render the index page."""
     url = "https://maps.googleapis.com/" \
           "maps/api/js?key={}".format(app.config["GOOGLE_API_KEY"])
     return render_template('index.html', url_google_map_api=url)
@@ -20,6 +21,8 @@ def index():
 
 @app.route('/post_ask/', methods=['POST'])
 def post_ask():
+    """traitment of the ask request
+    :return google_maps and wikipedia response"""
     if request.form.get('ask'):
         google_maps_parsed = {}
         wikipedia_parsed = {}
@@ -30,11 +33,12 @@ def post_ask():
                 google_maps_parsed = parse_geolocate_response(_parse_sentence)
 
                 wiki_search_list = wikipedia.search(
-                    google_maps_parsed['formatted_address'], suggestion=False)
+                    google_maps_parsed['asked_address'], suggestion=False)
 
                 if not wiki_search_list:
                     wiki_search_list = wikipedia.search(
-                        google_maps_parsed['asked_address'], suggestion=False)
+                        google_maps_parsed['formatted_address'],
+                        suggestion=False)
 
                 if not wiki_search_list:
                     wiki_search_list = wikipedia.geosearch(

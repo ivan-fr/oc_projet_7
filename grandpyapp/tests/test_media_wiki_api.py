@@ -193,7 +193,6 @@ class TestSearch:
                 },
                 'qmxjsudek': {'batchcomplete': '', 'query': {'search': []}}
             }
-
         }
 
     def test_search(self, monkeypatch):
