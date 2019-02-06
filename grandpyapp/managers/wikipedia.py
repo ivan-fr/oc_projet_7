@@ -1,7 +1,4 @@
 from .utils import return_urllib_request
-from grandpyapp.exceptions import (
-    PageError, RedirectError, HTTPTimeoutError,
-    WikipediaException)
 
 API_URL = 'https://fr.wikipedia.org/w/api.php'
 
@@ -31,9 +28,15 @@ def search(query, results=10, suggestion=False):
     if 'error' in raw_results:
         if raw_results['error']['info'] in ('HTTP request timed out.',
                                             'Pool queue is full'):
-            raise HTTPTimeoutError(query)
+            raise Exception(
+                "Searching for \"{0}\" resulted in a timeout."
+                " Try again in a few"
+                " seconds, and make sure you have"
+                " rate limiting set to True.".format(query))
         else:
-            raise WikipediaException(raw_results['error']['info'])
+            raise Exception("An unknown error occured: \"{0}\"."
+                            " Please report it on GitHub!"
+                            .format(raw_results['error']['info']))
 
     search_results = (d['title'] for d in raw_results['query']['search'])
 
@@ -78,9 +81,15 @@ def geosearch(latitude, longitude, title=None, results=10, radius=1000):
     if 'error' in raw_results:
         if raw_results['error']['info'] in ('HTTP request timed out.',
                                             'Pool queue is full'):
-            raise HTTPTimeoutError('{0}|{1}'.format(latitude, longitude))
+            raise Exception("Searching for \"{0}\" resulted in a timeout."
+                            " Try again in a few"
+                            " seconds, and make sure you have"
+                            " rate limiting set to True."
+                            .format('{0}|{1}'.format(latitude, longitude)))
         else:
-            raise WikipediaException(raw_results['error']['info'])
+            raise Exception("An unknown error occured: \"{0}\"."
+                            " Please report it on GitHub!"
+                            .format(raw_results['error']['info']))
 
     search_pages = raw_results['query'].get('pages', None)
     if search_pages:
@@ -115,7 +124,8 @@ def page(title=None, pageid=None, auto_suggest=True, redirect=True):
             except IndexError:
                 # if there is no suggestion or search results,
                 # the page doesn't exist
-                raise PageError(title)
+                raise Exception("\"{0}\" does not match any pages."
+                                " Try another query!".format(title))
         return WikipediaPage(title, redirect=redirect)
     elif pageid is not None:
         return WikipediaPage(pageid=pageid)
@@ -173,9 +183,12 @@ class WikipediaPage(object):
         # missing is present if the page is missing
         if 'missing' in _page:
             if hasattr(self, 'title'):
-                raise PageError(self.title)
+                raise Exception("\"{0}\" does not match any pages."
+                                " Try another query!".format(self.title))
             else:
-                raise PageError(pageid=self.pageid)
+                raise Exception("Page id \"{0}\" does not "
+                                "match any pages. Try another id!"
+                                .format(self.pageid))
 
         # same thing for redirect, except
         # it shows up in query instead of page for
@@ -199,16 +212,23 @@ class WikipediaPage(object):
                 self.__init__(redirects['to'], redirect=redirect)
 
             else:
-                raise RedirectError(getattr(self, 'title', _page['title']))
+                raise Exception(
+                    "\"{0}\" resulted in a redirect. Set the redirect property"
+                    " to True to allow automatic redirects."
+                    .format(getattr(self, 'title', _page['title'])))
 
         # since we only asked for disambiguation in ppprop,
         # if a pageprop is returned,
         # then the page must be a disambiguation page
         elif 'pageprops' in _page:
             if hasattr(self, 'title'):
-                raise PageError(title=self.title + " disambiguation")
+                raise Exception("\"{0}\" does not match any pages."
+                                " Try another query!"
+                                .format(self.title + " disambiguation"))
             else:
-                raise PageError(pageid=self.pageid)
+                raise Exception("Page id \"{0}\" does not "
+                                "match any pages. Try another id!"
+                                .format(self.pageid))
         else:
             self.pageid = pageid
             self.title = _page['title']
