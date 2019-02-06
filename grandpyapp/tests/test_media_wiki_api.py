@@ -315,7 +315,7 @@ class TestPageSetUp:
 
         monkeypatch.setattr(urllib.request, 'urlopen', mockreturn)
 
-        with pytest.raises(wikipedia.PageError):
+        with pytest.raises(Exception):
             wikipedia.page("sdfjpodsjdf", auto_suggest=False)
 
     def test_redirect_true(self, monkeypatch):
@@ -346,7 +346,7 @@ class TestPageSetUp:
 
         monkeypatch.setattr(urllib.request, 'urlopen', mockreturn)
 
-        with pytest.raises(wikipedia.RedirectError):
+        with pytest.raises(Exception):
             wikipedia.page("Menlo Park, New Jersey",
                            auto_suggest=False, redirect=False)
 
