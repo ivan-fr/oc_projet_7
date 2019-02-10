@@ -121,8 +121,6 @@ form.addEventListener("submit", function (e) {
                 let _location_southwest = new google.maps.LatLng(obj.google_maps_parsed.bounds.southwest.lat,
                     obj.google_maps_parsed.bounds.southwest.lng);
 
-                let wiki_summary = obj.wikipedia_parsed._summary;
-
                 let media_body = addMedia("GrandPy Bot",
                     "Hum.. Je vois où celà se trouve !<br>" +
                     "Adresse: " + obj.google_maps_parsed.formatted_address,
@@ -148,7 +146,7 @@ form.addEventListener("submit", function (e) {
 
                 addMedia("GrandPy Bot",
                     "Tiens, ça me rappelle quelque chose: <br>" +
-                    wiki_summary +
+                    obj.wikipedia_parsed._summary +
                     "<br><a href='" + obj.wikipedia_parsed.url + "' target='_blank'>[En savoir plus]</a>",
                     span_messagerie.getAttribute("data-image-papi"),
                     true);
@@ -157,7 +155,6 @@ form.addEventListener("submit", function (e) {
                     "Je suis vieux tu sais, formule moi ta question un peu plus simplement...",
                     span_messagerie.getAttribute("data-image-papi"),
                     true);
-                console.error(error);
             }
             div_messagerie.scrollTop = div_messagerie.scrollHeight - div_messagerie.clientHeight;
         },
