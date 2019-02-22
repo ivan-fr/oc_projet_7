@@ -23,7 +23,7 @@ submit_button.type = "submit";
 submit_button.classList.add("btn");
 submit_button.classList.add("btn-primary");
 submit_button.classList.add("mb-2");
-submit_button.appendChild(document.createTextNode("Soumettre"));
+submit_button.appendChild(document.createTextNode("Envoyer"));
 
 let loader_img = document.createElement("div");
 loader_img.classList.add("loader");

@@ -1,4 +1,3 @@
-import json
 import urllib.request
 from io import BytesIO
 from decimal import Decimal
