@@ -65,7 +65,7 @@ def post_ask():
                     wikipedia_parsed['_summary'] = wikipedia_page.summary(
                         sentences=2)
                     wikipedia_parsed['url'] = wikipedia_page.url
-            except Exception as e:
+            except AssertionError as e:
                 logging.exception(e)
 
         return json.dumps({

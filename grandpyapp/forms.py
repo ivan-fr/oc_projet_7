@@ -7,7 +7,7 @@ import json
 class AskForm(FlaskForm):
     ask = StringField('ask', validators=[validators.DataRequired(),
                                          validators.Length(max=200)],
-                      render_kw={"placeholder": "Exemple: Salut GrandPy ! "
+                      render_kw={"placeholder": "Salut GrandPy ! "
                                                 "Est-ce que tu connais "
                                                 "l'adresse d'OpenClassrooms ?",
                                  "autocomplete": "off"})
