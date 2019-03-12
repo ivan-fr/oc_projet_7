@@ -22,7 +22,6 @@ let submit_button = document.createElement("button");
 submit_button.type = "submit";
 submit_button.classList.add("btn");
 submit_button.classList.add("btn-primary");
-submit_button.classList.add("mb-2");
 submit_button.appendChild(document.createTextNode("Envoyer"));
 
 let loader_img = document.createElement("div");
@@ -35,6 +34,7 @@ let ask_input = document.getElementById("ask");
 
 let messagerie = document.createElement("ul");
 messagerie.classList.add("list-unstyled");
+messagerie.classList.add("mb-0");
 
 function addMedia(title, message, src_media, nofirst) {
     let media = document.createElement("li");
@@ -51,6 +51,7 @@ function addMedia(title, message, src_media, nofirst) {
 
     let media_body = document.createElement("div");
     media_body.classList.add("media-body");
+    media_body.classList.add("px-1", "py-1");
 
     let _title = document.createElement("h5");
     _title.classList.add("mt-0");
