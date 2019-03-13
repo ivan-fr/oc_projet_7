@@ -184,7 +184,7 @@ form.addEventListener("submit", function (e) {
 let question_list = [
     ["Salut papi, j'aimerai avoir l'adresse de sète stp.", "FR"],
     ["coucou grand père, tu ne saurais pas où est situé Paris par hasard ?", "FR"],
-    ["yo papi, j'veux bien l'adresse du groenland.", "GP"],
+    ["yo papi, j'veux bien l'adresse du groenland.", "GL"],
     ["hey, tu n'aurais pas une idée d'où se situe la rue des rosiers par hasard ?", "FR"],
     ["je veux aller en angleterre", "GB"],
     ["Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?", "FR"]
