@@ -2,8 +2,7 @@ import pytest
 import json
 import urllib.request
 from io import BytesIO
-from grandpyapp.managers.googlemaps import get_geolocate, \
-    parse_geolocate
+from grandpyapp.managers.googlemaps import GoogleFunction
 
 
 class TestGoogleMapsApi:
@@ -21,7 +20,7 @@ class TestGoogleMapsApi:
 
         monkeypatch.setattr(urllib.request, 'urlopen', mockreturn)
 
-        _response = get_geolocate("tour eiffel")
+        _response = GoogleFunction.get_geolocate("tour eiffel")
 
         assert response == _response
 
@@ -39,7 +38,7 @@ class TestGoogleMapsApi:
         monkeypatch.setattr(urllib.request, 'urlopen', mockreturn)
 
         with pytest.raises(AssertionError):
-            get_geolocate('ireozprjfze')
+            GoogleFunction.get_geolocate('ireozprjfze')
 
     def test_parse_geolocate_response(self, monkeypatch):
         """Test if the function return a dict with the expected keys"""
@@ -74,7 +73,7 @@ class TestGoogleMapsApi:
 
         monkeypatch.setattr(urllib.request, 'urlopen', mockreturn)
 
-        _response = parse_geolocate("openclassrooms")
+        _response = GoogleFunction.parse_geolocate("openclassrooms")
 
         assert list(_response.keys()) == [
             "asked_address",
