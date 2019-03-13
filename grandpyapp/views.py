@@ -61,10 +61,19 @@ def post_ask():
                     )
 
                 if wiki_search_list:
-                    wikipedia_page = wikipedia.page(wiki_search_list[0])
+                    try:
+                        wikipedia_page = wikipedia.page(wiki_search_list[0])
+                    except Exception:
+                        wiki_search_list = wikipedia.geosearch(
+                            latitude=google_maps_parsed['location']['lat'],
+                            longitude=google_maps_parsed['location']['lng'],
+                        )
+                        wikipedia_page = wikipedia.page(wiki_search_list[0])
+
                     wikipedia_parsed['_summary'] = wikipedia_page.summary(
                         sentences=2)
                     wikipedia_parsed['url'] = wikipedia_page.url
+
             except AssertionError as e:
                 logging.exception(e)
 

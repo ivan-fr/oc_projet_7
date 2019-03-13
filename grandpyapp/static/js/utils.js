@@ -1,6 +1,6 @@
-// Exécute un appel AJAX POST
-// Prend en paramètres l'URL cible, la donnée à envoyer et la fonction callback appelée en cas de succès
-// Le paramètre isJson permet d'indiquer si l'envoi concerne des données JSON
+// Make an AJAX POST call
+// Takes into parameters the target URL, the data to be sent and the callback function called on success
+// The isJson parameter is used to indicate whether the send is for JSON data
 function ajaxPost(url, data, successCallback, errorCallback, generalCallback, progressCallback) {
     let req = new XMLHttpRequest();
     req.open("POST", url, true);
@@ -20,8 +20,7 @@ function ajaxPost(url, data, successCallback, errorCallback, generalCallback, pr
 
 let submit_button = document.createElement("button");
 submit_button.type = "submit";
-submit_button.classList.add("btn");
-submit_button.classList.add("btn-primary");
+submit_button.classList.add("btn", "btn-primary");
 submit_button.appendChild(document.createTextNode("Envoyer"));
 
 let loader_img = document.createElement("div");
@@ -31,11 +30,14 @@ let block_from_form = document.getElementById("submit_form");
 block_from_form.appendChild(submit_button);
 
 let ask_input = document.getElementById("ask");
+let countries_input = document.getElementById('countries');
 
+// create messaging ul
 let messagerie = document.createElement("ul");
 messagerie.classList.add("list-unstyled");
 messagerie.classList.add("mb-0");
 
+// add media function
 function addMedia(title, message, src_media, nofirst) {
     let media = document.createElement("li");
     media.classList.add("media");
@@ -80,14 +82,15 @@ div_messagerie.appendChild(messagerie);
 
 let span_messagerie = div_messagerie.getElementsByTagName("span")[0];
 
+// add media
 addMedia("GrandPy Bot",
     "Je suis un as de l'exploration. Questionne mon savoir.",
     span_messagerie.getAttribute("data-image-papi")
 );
 
-let form = document.getElementsByTagName("form")[0];
+let form = document.querySelector("form");
 
-// Gestion de la soumission du formulaire
+// Form submission management
 form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -178,3 +181,26 @@ form.addEventListener("submit", function (e) {
     );
 });
 
+let question_list = [
+    ["Salut papi, j'aimerai avoir l'adresse de sète stp.", "FR"],
+    ["coucou grand père, tu ne saurais pas où est situé Paris par hasard ?", "FR"],
+    ["yo papi, j'veux bien l'adresse du groenland.", "GP"],
+    ["hey, tu n'aurais pas une idée d'où se situe la rue des rosiers par hasard ?", "FR"],
+    ["je veux aller en angleterre", "GB"],
+    ["Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?", "FR"]
+];
+let eraser_button = form.querySelector('#eraser');
+let random_button = form.querySelector('#random');
+
+eraser_button.addEventListener("click", function (e) {
+    e.preventDefault();
+    ask_input.value = "";
+    countries_input.value = "";
+});
+
+random_button.addEventListener("click", function (e) {
+    e.preventDefault();
+    let random_list = question_list[Math.floor(Math.random() * question_list.length)];
+    ask_input.value = random_list[0];
+    countries_input.value = random_list[1];
+});

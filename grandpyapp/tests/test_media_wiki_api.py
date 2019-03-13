@@ -6,7 +6,7 @@ import pytest
 from .mock_data_wiki import mock_data_wiki
 
 
-class TestSearchLoc:
+class TestSearchLocation:
     """Test the functionality of wikipedia.geosearch."""
 
     @classmethod
