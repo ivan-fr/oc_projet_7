@@ -191,16 +191,42 @@ let question_list = [
 ];
 let eraser_button = form.querySelector('#eraser');
 let random_button = form.querySelector('#random');
+let index_splice_question_list = null;
 
 eraser_button.addEventListener("click", function (e) {
     e.preventDefault();
     ask_input.value = "";
     countries_input.value = "";
+    index_splice_question_list = null;
 });
 
 random_button.addEventListener("click", function (e) {
     e.preventDefault();
-    let random_list = question_list[Math.floor(Math.random() * question_list.length)];
+    let random_list = null;
+    let splice_question_list = null;
+
+    if (index_splice_question_list !== null) {
+        splice_question_list = [];
+        question_list.forEach(function (value, index) {
+            if (index_splice_question_list !== index) {
+                splice_question_list.push(value);
+            }
+        });
+    }
+
+    if (splice_question_list === null) {
+        random_list = question_list[Math.floor(Math.random() * question_list.length)];
+    } else {
+        random_list = splice_question_list[Math.floor(Math.random() * splice_question_list.length)];
+    }
+
     ask_input.value = random_list[0];
     countries_input.value = random_list[1];
+
+    question_list.forEach(function (value, index) {
+        if (value === random_list) {
+            index_splice_question_list = index;
+            return false
+        }
+    })
 });
