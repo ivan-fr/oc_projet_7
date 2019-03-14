@@ -7,7 +7,7 @@ from flask.views import MethodView
 from grandpyapp.managers.wikipedia import WikipediaFunction
 from grandpyapp.forms import AskForm
 from grandpyapp.managers.googlemaps import GoogleFunction
-from grandpyapp.managers.parser import parse_sentence
+from grandpyapp.managers.parser import Parser
 
 app = Flask(__name__)
 
@@ -34,7 +34,7 @@ class IndexView(MethodView):
         if ask_form.validate_on_submit():
             google_maps_parsed = {}
             wikipedia_parsed = {}
-            _parse_sentence = parse_sentence(ask_form.ask.data)
+            _parse_sentence = Parser.parse_sentence(ask_form.ask.data)
 
             if _parse_sentence:
                 try:
